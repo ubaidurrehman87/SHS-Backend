@@ -1,6 +1,6 @@
 const mongoose =require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/SmartContract',(err)=>{
+mongoose.connect('mongodb+srv://ubaid:wuPHxXmTTNAJh4An@cluster0-rlfji.mongodb.net/test?retryWrites=true&w=majority',(err)=>{
     if (!err){
         console.log('DB connected Succfully...');
     }
