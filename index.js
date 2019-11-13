@@ -5,7 +5,8 @@ const cors =require('cors');
 
 var propertyController=require('./Controller/propertyController');
 var ownerController= require('./Controller/ownerController');
-
+var rentController = require ('./Controller/rentController');
+var sellerController = require ('./Controller/sellerController');
 var app=express();
 
 app.use(bodyparser.json());
@@ -14,3 +15,5 @@ app.listen(3000,()=>console.log('Server started at port : 3000'));
 
 app.use('/property',propertyController);
 app.use('/owner',ownerController);
+app.use('/rent',rentController);
+app.use('/seller',sellerController);

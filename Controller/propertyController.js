@@ -43,7 +43,7 @@ var prop=new Property({
     postalcode :  req.body.postalcode,
     house : req.body.house,
     area :  req.body.area,
-    rooms :  req.body.room,
+    rooms :  req.body.rooms,
     floors :  req.body.floors
 });
 
