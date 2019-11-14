@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-var Schema =mongoose.Schema();
-var ObjectId = require('mongodb').ObjectID;
+var Schema = mongoose.Schema;
 
-var Seller= mongoose.model('Seller',{
+var Seller= new Schema({
     firstname : {type : String},
     lastname : {type : String},
     username : {type : String},
@@ -12,4 +11,4 @@ var Seller= mongoose.model('Seller',{
     // prop : [{type : Schema.Types.ObjectId , ref : 'Property'}]
 });
 
-module.exports={Seller};
+module.exports = mongoose.model('Seller', Seller);

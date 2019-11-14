@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 var router=express.Router();
 
-var {Property} = require('../models/property');
+var Property = require('../models/property');
 
 router.get('/',(req,res)=>{
     Property.find((err,docs)=>{

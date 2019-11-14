@@ -1,7 +1,8 @@
 const mongoose=require('mongoose');
-var Schema = mongoose.Schema();
-var ObjectId = require('mongodb').ObjectID;
-var Property =mongoose.model('Property',{
+
+var Schema = mongoose.Schema;
+
+var Property = new Schema({
     location : {type: String},
     state : {type : String},
     city : {type : String},
@@ -14,4 +15,4 @@ var Property =mongoose.model('Property',{
     // owner : [{ type : Schema.Types.ObjectId, ref : 'Owner'}]
 });
 
-module.exports={Property};
+module.exports= mongoose.model('Property', Property);
