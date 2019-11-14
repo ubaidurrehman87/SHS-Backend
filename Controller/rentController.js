@@ -1,6 +1,7 @@
-const express = require ('express');
-var router = express.Router();
+const express =require('express');
 var ObjectId = require('mongodb').ObjectID;
+var router=express.Router();
+
 var {Rent} = require ('../models/rent');
 
 router.get('/',(req,res)=>{

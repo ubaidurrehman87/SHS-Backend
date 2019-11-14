@@ -8,4 +8,4 @@ var Rent = mongoose.model('Rent',{
     cnic : {type : Number},
 });
 
-module.export = {Rent};
+module.exports = {Rent};
