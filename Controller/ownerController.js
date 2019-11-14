@@ -1,9 +1,9 @@
 const express = require('express')
-const ObjectId = require('mongodb').ObjectID;
+var ObjectId = require('mongodb').ObjectID;
 
 var router=express.Router();
 
-const {Owner}= require('../models/property');
+var {Owner}= require('../models/Owner');
 
 router.get('/',(req,res)=>{
     Owner.find((err,docs)=>{
