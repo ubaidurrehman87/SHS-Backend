@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 var router=express.Router();
 
-var {Owner}= require('../models/Owner');
+var Owner= require('../models/owner');
 
 router.get('/',(req,res)=>{
     Owner.find((err,docs)=>{
@@ -36,7 +36,7 @@ router.post('/',(req,res)=>{
 
 router.put('/:id',(req,res)=>{
     if(!ObjectId.isValid(req.body.id)){
-        res.status(400).send('Owner Dose not Exist!!');
+        res.status(400).send('Owner Does not Exist!!');
     }
     else{
         var owner={
