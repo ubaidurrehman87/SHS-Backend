@@ -8,7 +8,7 @@ var Property = new Schema({
     city : {type : String},
     district : {type : String},
     postalcode : {type : Number},
-    house : {type: Number},
+    house : {type: Number , unique : true},
     area : {type : Number},
     rooms : {type : Number},
     floors : {type : Number},

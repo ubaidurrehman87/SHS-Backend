@@ -28,7 +28,7 @@ router.post('/',(req,res)=>{
             res.send(docs);
         }
         else{
-            console.log('Error : '+JSON.stringify(err,undefined,2));
+            res.send(err);
         }
     });
     
