@@ -1,10 +1,8 @@
 const mongoose= require('mongoose');
+
 var Schema = mongoose.Schema;
-var ObjectId = require('mongodb').ObjectID;
 
-
-
-var Owner = new Schema({
+var owner = new Schema({
     firstname : {type:String},
     lastname : {type:String},
     email : {type : String , unique : true},
@@ -12,4 +10,4 @@ var Owner = new Schema({
     // prop : [ { type: Schema.Types,ObjectId , ref : 'Property'} ]
 });
 
-module.exports = mongoose.model('Owner', Owner);
+module.exports = mongoose.model('Owner', owner);
