@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var GovtAgent = mongoose.model('GovtAgent',{
+var govtAgent = new Schema({
     firstname : {type:String},
     lastname : {type:String},
     email : {type : String , unique : true},
+    password : { type : String},
     cnic : {type : Number},
     position : {type : String},
     departmentName : {type : String},
-    JobDescription : {type : String},
-
-
+    JobDescription : {type : String}
 });
 
-module.exports = {GovtAgent}
+module.exports = mongoose.model('govtAgent', govtAgent);
