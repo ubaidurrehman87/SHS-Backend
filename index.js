@@ -7,7 +7,9 @@ var propertyController=require('./Controller/propertyController');
 var ownerController= require('./Controller/ownerController');
 var rentController = require ('./Controller/rentController');
 var sellerController = require ('./Controller/sellerController');
+
 var govtAgentController = require('./Controller/govtAgentController');
+var approvalController = require('./Controller/approvelController');
 
 var app=express();
 
@@ -19,4 +21,7 @@ app.use('/property',propertyController);
 app.use('/owner',ownerController);
 app.use('/rent',rentController);
 app.use('/seller',sellerController);
+
 app.use('/govtAgent',govtAgentController);
+app.use('/approval',approvalController);
+
