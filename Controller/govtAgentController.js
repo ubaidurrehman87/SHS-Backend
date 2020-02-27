@@ -57,7 +57,13 @@ router.get('/', isAuthenticated, (req, res) => {
 
 // ==================== SignUp API ==========================
 router.post('/', (req, res) => {
-    if (req.body.fname != null && req.body.lname != null && req.body.email != null && req.body.password != null && req.body.cnic != null && req.body.position != null && req.body.departmentName != null) {
+    if (req.body.firstname != null 
+        && req.body.lastname != null 
+        && req.body.email != null 
+        && req.body.password != null 
+        && req.body.cnic != null && 
+        req.body.position != null 
+        && req.body.departmentName != null) {
         bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
             const govtAgent = new Agent({
                 firstname: req.body.firstname,
@@ -75,6 +81,7 @@ router.post('/', (req, res) => {
                     res.send(docs);
                 }
                 else {
+                    console.log(err);
                     res.send(err);
                 }
             });
@@ -90,8 +97,8 @@ router.post('/', (req, res) => {
 // ========================== Login API ==============================
 router.get('/login', (req, res) => {
     // console.log(atob(req.headers.authorization));
-    var agentEmail = atob(req.headers.email);
-    var agentPassword = atob(req.headers.password);
+    var agentEmail = req.body.email;
+    var agentPassword = req.body.password;
     if (agentEmail != null && agentPassword != null) {
 
         Agent.find({ 'email': agentEmail }, (err, user) => {
