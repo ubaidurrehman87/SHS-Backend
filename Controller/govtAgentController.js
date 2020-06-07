@@ -57,8 +57,7 @@ router.get('/', isAuthenticated, (req, res) => {
 
 // ==================== SignUp API ==========================
 router.post('/', (req, res) => {
-    if (req.body.firstname != null 
-        && req.body.lastname != null 
+    if (req.body.fullName != null 
         && req.body.email != null 
         && req.body.password != null 
         && req.body.cnic != null && 
@@ -66,8 +65,7 @@ router.post('/', (req, res) => {
         && req.body.departmentName != null) {
         bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
             const govtAgent = new Agent({
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
+                fullName: req.body.fullName,
                 email: req.body.email,
                 password: hash,
                 cnic: req.body.cnic,
@@ -82,7 +80,7 @@ router.post('/', (req, res) => {
                 }
                 else {
                     console.log(err);
-                    res.send(err);
+                    res.status(500).send(err);
                 }
             });
         });
@@ -95,10 +93,10 @@ router.post('/', (req, res) => {
 
 
 // ========================== Login API ==============================
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
     // console.log(atob(req.headers.authorization));
-    var agentEmail = req.body.email;
-    var agentPassword = req.body.password;
+    var agentEmail = req.body.Agent.email;
+    var agentPassword = req.body.Agent.password;
     if (agentEmail != null && agentPassword != null) {
 
         Agent.find({ 'email': agentEmail }, (err, user) => {
@@ -107,7 +105,7 @@ router.get('/login', (req, res) => {
                     if (bcrypt.compareSync(agentPassword, user[0].password)) {
                         let PrivateKey = fs.readFileSync(path.resolve('Controller/server.pem'), 'utf8');
                         let token = jwt.sign({ "body": "stuff" }, PrivateKey, { algorithm: 'HS256' });
-                        res.status(200).json({ "token": token });
+                        res.status(200).json({ "token": token , name : user[0].fullName, email : user[0].email});
                     }
                     else {
                         res.status(201).send({ "message": "Email or Password is incorrect" });

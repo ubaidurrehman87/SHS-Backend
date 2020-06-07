@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var govtAgent = new Schema({
-    firstname : {type:String},
-    lastname : {type:String},
+    fullName : {type:String},
     email : {type : String , unique : true},
     password : { type : String},
     cnic : {type : Number},

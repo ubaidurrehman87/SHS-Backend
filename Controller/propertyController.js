@@ -5,8 +5,64 @@ var router=express.Router();
 
 var Property = require('../models/property');
 
+router.put('/approve/:id',(req,res)=>{
+    if (!ObjectId.isValid(req.params.id)){
+        res.status(400).send("Property does not Exist!")
+    }
+    else{
+        Property.findOneAndUpdate({_id: ObjectId(req.params.id)},
+         {
+           $set: {
+                approveStatus: "approved"
+            }
+         },
+         { new: true } // return updated post
+        ).exec(function(error, post) {
+            if(error) {
+                return res.status(400).send({msg: 'Update failed!', error : error});
+            }
+            res.status(200).send(post);
+        });
+    }
+})
+
+router.put('/disapprove/:id',(req,res)=>{
+    if (!ObjectId.isValid(req.params.id)){
+        res.status(400).send("Property does not Exist!")
+    }
+    else{
+        Property.findOneAndUpdate({_id: ObjectId(req.params.id)},
+         {
+           $set: {
+                approveStatus: "disapproved"
+            }
+         },
+         { new: true } // return updated post
+        ).exec(function(error, post) {
+            if(error) {
+                return res.status(400).send({msg: 'Update failed!', error : error});
+            }
+            res.status(200).send(post);
+        });
+    }
+})
+
 router.get('/',(req,res)=>{
     Property.find((err,docs)=>{
+        if(!err){
+            res.send(docs);
+        }
+        else{
+            res.send(err)
+            console.log('Error Retriving Property');
+        }
+    });
+
+});
+
+
+router.get('/:email',(req,res)=>{
+    Property.find({'owner' : req.params.email},(err,docs)=>{
         if(!err){
             res.send(docs);
         }
@@ -36,50 +92,71 @@ router.get('/:id',(req,res)=>{
 
 router.post('/',(req,res)=>{
 var prop=new Property({
-    location : req.body.location,
-    state : req.body.state,
-    city :  req.body.city,
-    district :  req.body.district,
-    postalcode :  req.body.postalcode,
-    house : req.body.house,
-    area :  req.body.area,
-    rooms :  req.body.rooms,
-    floors :  req.body.floors
+    location : req.body.property.location,
+    city :  req.body.property.city,
+    type : req.body.property.type,
+    district :  req.body.property.district,
+    postalcode :  req.body.property.postalcode,
+    house : req.body.property.houseNumber,
+    area :  req.body.property.area,
+    approveStatus : req.body.property.approveStatus,
+    rooms :  req.body.property.rooms,
+    floors :  req.body.property.floors,
+    owner : req.body.property.user
 });
-
 prop.save((err,docs)=>{
     if(!err){
-        res.send(docs);
+        res.status(200).send(docs);
     }
     else{
-        console.log('Error can not add Property');
+        console.log(err)
+        res.status(500).send(err)
     }
 });
 
 });
 
-router.put('/:id',(err,res)=>{
+router.put('/:id',(req,res)=>{
     if (!ObjectId.isValid(req.params.id)){
         return res.status(400).send("Property does not Exist!")
     }
     else{
         var prop={
-            location : req.body.location,
-            state : req.body.state,
-            city :  req.body.city,
-            district :  req.body.district,
-            postalcode :  req.body.postalcode,
-            house : req.body.house,
-            area :  req.body.area,
-            rooms :  req.body.room,
-            floors :  req.body.floors
-        }
-        Property.findById(req.params.id,{$set : prop},{new :true},(err,docs)=>{
+            location : req.body.property.location,
+            city :  req.body.property.city,
+            type : req.body.property.type,
+            district :  req.body.property.district,
+            house : req.body.property.houseNumber,
+            area :  req.body.property.area,
+            rooms :  req.body.property.rooms,
+            floors :  req.body.property.floors,
+        };
+        let conditions = { _id : ObjectId(req.params.id)}
+        let update = {$set : prop}
+        Property.findOneAndUpdate(conditions,update,{new :true},(err,docs)=>{
             if (!err){
                 res.send(docs);
             }
             else{
-                console.log("Error in Updation :"+JSON.stringify(err,this.undefined,2));
+                res.status(500).send(err)
+            }
+        })
+    }
+})
+
+router.put('/available/:id', (req,res)=> {
+    if(!ObjectId.isValid(req.params.id)){
+        return res.status(400).send("Property does not Exist!")
+    }
+    else{
+        let conditions = { _id : ObjectId(req.params.id)}
+        let update = { $set : { availabilityStatus : req.body.availabilityStatus } }
+        Property.findOneAndUpdate(conditions,update,{new : true}, (err,docs)=>{
+            if(!err){
+                res.status(200).send(docs)
+            }
+            else{
+                res.status(500).send(err)
             }
         })
     }

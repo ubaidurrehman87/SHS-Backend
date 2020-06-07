@@ -3,10 +3,11 @@ const mongoose= require('mongoose');
 var Schema = mongoose.Schema;
 
 var owner = new Schema({
-    firstname : {type:String},
-    lastname : {type:String},
+    fullName : {type:String},
     email : {type : String , unique : true},
-    cnic : {type : String},
+    cnic : {type : String, unique : true},
+    password : { type : String},
+    address : { type : String},
     // prop : [ { type: Schema.Types,ObjectId , ref : 'Property'} ]
 });
 
