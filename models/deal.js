@@ -16,7 +16,9 @@ var Deal = new Schema({
         type : String,
         enum : ['open','closed', 'pending'],
         default : 'Open'
-    }
+    },
+    from : { type : String},
+    to : { type : String}
 
 })
 // Deal.plugin(AutoIncrement, {inc_field: 'id'});

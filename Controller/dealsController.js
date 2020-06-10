@@ -1,6 +1,10 @@
 const express = require('express')
 var ObjectId = require('mongodb').ObjectID
+var contract = require("pdf-creator-node");
+var fs = require('fs');
 
+// Read HTML Template
+// var html = fs.readFileSync('template.html', 'utf8');
 var router = express.Router()
 
 var Property = require('../models/property')
@@ -85,6 +89,41 @@ router.get('/', (req, res) => {
             res.status(400).send(err)
         }
     })
+})
+
+router.get('/:email', (req, res) => {
+    Deal.find({"email" : req.params.email},(err, docs) => {
+        if (!err) {
+            res.status(200).send(docs)
+        }
+        else {
+            res.status(400).send(err)
+        }
+    })
+})
+router.put('/:id', (req, res) => {
+    if (!ObjectId.isValid(req.params.id)){
+        res.status(400).send("Deal does not Exist!")
+    }
+    else{
+        Deal.findOneAndUpdate({_id: ObjectId(req.params.id)},
+         {
+           $set: {
+                message : req.body.DEAL.message,
+                from : req.body.DEAL.from,
+                to : req.body.DEAL.to,
+                status : 'closed'
+            }
+         },
+         { new: true } // return updated post
+        ).exec(function(error, post) {
+            if(error) {
+                return res.status(400).send({msg: 'Update failed!', error : error});
+            }
+
+            res.status(200).send(post);
+        });
+    }
 })
 
 module.exports = router
