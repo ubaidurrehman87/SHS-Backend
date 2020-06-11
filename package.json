@@ -19,6 +19,7 @@
     "mongoose": "^5.7.9",
     "mongoose-sequence": "^5.2.2",
     "multichain-node": "^2.2.0-version1.0.4",
-    "pdf-creator-node": "^1.4.1"
+    "pdf-creator-node": "^1.4.1",
+    "pdfkit": "^0.11.0"
   }
 }

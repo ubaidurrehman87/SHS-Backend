@@ -5,6 +5,24 @@ var router=express.Router();
 
 var Property = require('../models/property');
 
+router.get('/:id',(req,res)=>{
+    console.log(req.params)
+    if(!ObjectId.isValid(req.params.id)){
+        return res.status(400).send('No Record with given id :'+req.params.id);
+    }
+    else{
+        Property.findById(req.params.id,(err,docs)=>{
+            if (!err){
+                res.send(docs);
+            }
+            else{
+                res.send("Error");
+            }
+        });
+    }
+
+});
+
 router.put('/approve/:id',(req,res)=>{
     if (!ObjectId.isValid(req.params.id)){
         res.status(400).send("Property does not Exist!")
@@ -73,22 +91,6 @@ router.get('/:email',(req,res)=>{
 
 });
 
-router.get('/:id',(req,res)=>{
-    if(!ObjectId.isValid(req.params.id)){
-        return res.status(400).send('No Record with given id :'+req.params.id);
-    }
-    else{
-        Property.findById(req.params.id,(err,docs)=>{
-            if (!err){
-                res.send(docs);
-            }
-            else{
-                res.send("Error");
-            }
-        });
-    }
-
-});
 
 router.post('/',(req,res)=>{
 var prop=new Property({

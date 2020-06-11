@@ -108,8 +108,7 @@ router.put('/:id',(req,res)=>{
     }
     else{
         var owner={
-            firstname : req.body.name,
-            lastname : req.body.lastname,
+            fullName : req.body.fullName,
             email : req.body.email,
             cnic : req.body.cnic
         }
